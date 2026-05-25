@@ -1,0 +1,10 @@
+{
+  "name": "pde-project",
+  "version-string": "0.1.0",
+  "description": "C++ numerical kernels exposed to Python for PDE/CFD experiments.",
+  "dependencies": [
+    "eigen3",
+    "fmt",
+    "nlohmann-json"
+  ]
+}
