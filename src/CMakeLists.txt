@@ -21,7 +21,7 @@ find_package(Eigen3 CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
 
-pybind11_add_module(cfd_solver MODULE solver.cpp mesh.cpp)
+pybind11_add_module(cfd_solver MODULE bindings.cpp solver.cpp mesh.cpp)
 
 target_include_directories(cfd_solver PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 

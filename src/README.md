@@ -43,6 +43,36 @@ cmake --build --preset default
 ctest --preset default
 ```
 
+## CUDA 编译
+
+如果要启用 CUDA 后端，使用：
+
+```bash
+cmake --preset cuda
+cmake --build --preset cuda
+```
+
+然后在 Python 中检查：
+
+```python
+import sys
+sys.path.insert(0, "build/cuda/python")
+import cfd_solver
+
+print(cfd_solver.cuda_enabled())
+print(cfd_solver.cuda_device_count())
+print(cfd_solver.cuda_runtime_version())
+```
+
+当前项目把 CUDA 代码放在：
+
+```text
+cuda_backend.hpp
+cuda_backend.cu
+```
+
+后续可以把温度推进、速度预测、压力泊松迭代等计算密集 kernel 逐步迁移到 `.cu` 文件中。`mesh.cpp` 不依赖 CUDA，可以直接复用。
+
 ## 运行
 
 ```bash
