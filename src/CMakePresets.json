@@ -43,7 +43,7 @@
         "PDE_ENABLE_CUDA": "ON",
         "CMAKE_CUDA_STANDARD": "17",
         "CMAKE_CUDA_STANDARD_REQUIRED": "ON",
-        "CMAKE_CUDA_ARCHITECTURES": "90-virtual"
+        "CMAKE_CUDA_ARCHITECTURES": "native"
       }
     },
     {

@@ -65,37 +65,33 @@ class Mesh2DGenerator:
         points_in_boundary_layer: int = 10,
     ) -> float: ...
 
-class HeatSolverOptions:
+class SolverOption:
     reynolds: float
-    peclet: float
     richardson: float
-    inlet_temperature: float
-    initial_temperature: float
+    peclet: float
+    u_in: float
+    v_in: float
+    T_in: float
     wall_heat_flux: float
-    inlet_velocity: float
-    dt: float
-    steps: int
-    save_interval: int
-    poisson_max_iterations: int
+    time_sep: float
+    step: int
+    save_sep: int
+    poisson_max_interval: int
     poisson_tolerance: float
     poisson_omega: float
+    use_cuda: bool
 
     def __init__(self) -> None: ...
 
-class HeatSolverResult:
-    temperature: FloatArray
+class FlowField:
+    step: int
+    time: float
     u: FloatArray
     v: FloatArray
-    pressure: FloatArray
+    p: FloatArray
+    T: FloatArray
     divergence: FloatArray
-    time_history: FloatArray
-    max_temperature_history: FloatArray
-    mean_temperature_history: FloatArray
-    max_divergence_history: FloatArray
 
-class ChannelHeatSolver:
-    mesh: Mesh2D
-    options: HeatSolverOptions
-
-    def __init__(self, mesh: Mesh2D, options: HeatSolverOptions = ...) -> None: ...
-    def run(self) -> HeatSolverResult: ...
+class Solver:
+    def __init__(self, mesh: Mesh2D, option: SolverOption) -> None: ...
+    def run(self) -> FlowField: ...

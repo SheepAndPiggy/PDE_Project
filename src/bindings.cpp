@@ -37,7 +37,7 @@ PYBIND11_MODULE(cfd_solver, m)
 {
     m.doc() = "C++ CFD/PDE numerical kernels exposed to Python";
 
-    m.def("version", [] { return "0.4.0"; });
+    m.def("version", [] { return "0.5.0"; });
     m.def("dependency_summary", &dependency_summary);
     m.def("cuda_enabled", [] {
 #ifdef PDE_ENABLE_CUDA
@@ -119,6 +119,23 @@ PYBIND11_MODULE(cfd_solver, m)
         .def_readwrite("time_sep", &solver::SolverOption::time_sep)
         .def_readwrite("step", &solver::SolverOption::step)
         .def_readwrite("save_sep", &solver::SolverOption::save_sep)
-        .def_readwrite("possion_max_interval", &solver::SolverOption::possion_max_interval)
-        .def_readwrite("possion_tolerance", &solver::SolverOption::possion_tolerance);
+        .def_readwrite("poisson_max_interval", &solver::SolverOption::poisson_max_interval)
+        .def_readwrite("poisson_tolerance", &solver::SolverOption::poisson_tolerance)
+        .def_readwrite("poisson_omega", &solver::SolverOption::poisson_omega)
+        .def_readwrite("use_cuda", &solver::SolverOption::use_cuda);
+
+    py::class_<solver::FlowField>(m, "FlowField")
+        .def_readonly("step", &solver::FlowField::step)
+        .def_readonly("time", &solver::FlowField::time)
+        .def_readonly("u", &solver::FlowField::u)
+        .def_readonly("v", &solver::FlowField::v)
+        .def_readonly("p", &solver::FlowField::p)
+        .def_readonly("T", &solver::FlowField::T)
+        .def_readonly("divergence", &solver::FlowField::divergence);
+
+    py::class_<solver::Solver>(m, "Solver")
+        .def(py::init<const mesh::Mesh2D&, const solver::SolverOption&>(),
+             py::arg("mesh"),
+             py::arg("option"))
+        .def("run", &solver::Solver::run);
 }
